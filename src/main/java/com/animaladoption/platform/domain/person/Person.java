@@ -43,4 +43,14 @@ public class Person {
     @JoinColumn(name="address_id", referencedColumnName="id")
     private Address address;
 
+    public Person(PersonPostDto dto) {
+        this.cpf = dto.cpf();
+        this.name = dto.name();
+        this.login = dto.login();
+        this.password = dto.password();
+        this.email = dto.email();
+        this.phone = dto.phone();
+        this.address = dto.address();
+    }
+
 }
