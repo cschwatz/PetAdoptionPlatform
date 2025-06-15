@@ -52,4 +52,54 @@ public class PersonServiceImpl implements PersonService {
         Person createdPerson = repository.save(personEntity);
         return new PersonPostDto(createdPerson);
     }
+
+    @Override
+    public PersonPutDTO updateUser(UUID id, PersonPutDTO dto) {
+        if (dto == null) {
+            throw new IllegalArgumentException("O DTO do usuário é inválido.");
+        }
+        
+        Optional<Person> userToUpdateOpt = repository.findById(id);
+        if (userToUpdateOpt.get() == null) {
+            throw new ObjectNotFound("Não foi possível localizar o usuário informado");
+        }
+        Person userToUpdate = userToUpdateOpt.get();
+        // TODO - transformar isto em um método auxiliar
+        if (!dto.name().isBlank()) {
+            userToUpdate.setName(dto.name());
+        }
+        
+        if(!dto.password().isBlank()) {
+            userToUpdate.setPassword(dto.password());
+        }
+        
+        if(!dto.email().isBlank()) {
+            userToUpdate.setEmail(dto.email());
+        }
+        
+        if (!dto.phone().isBlank()) {
+            userToUpdate.setPhone(dto.phone());
+        }
+        
+        if (dto.address() != null) {
+            userToUpdate.setAddress(dto.address());
+        }
+        
+        Person savedUser = repository.save(userToUpdate);
+        return new PersonPutDTO(savedUser);
+    }
+
+    @Override
+    public void deleteUser(UUID id) {
+        if (id == null) {
+            throw new IllegalArgumentException("O id fornecido para remoção não é válido.");
+        }
+
+        Optional<Person> userToDelete = repository.findById(id);
+        if (userToDelete.isEmpty()) {
+            throw new ObjectNotFound("O usuário informado não foi encontrado");
+        }
+
+        repository.delete(userToDelete.get());
+    }
 }

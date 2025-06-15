@@ -7,4 +7,6 @@ public interface PersonService {
     List<PersonGetDto> getUsers();
     PersonGetDto getUserById(UUID personId);
     PersonPostDto createUser(PersonPostDto person);
+    PersonPutDTO updateUser(UUID id, PersonPutDTO dto);
+    void deleteUser(UUID id);
 }

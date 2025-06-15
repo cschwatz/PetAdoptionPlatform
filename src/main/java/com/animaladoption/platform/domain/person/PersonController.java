@@ -1,15 +1,12 @@
 package com.animaladoption.platform.domain.person;
 
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/person")
@@ -37,4 +34,16 @@ public class PersonController {
         return ResponseEntity.ok(personService.createUser(dto));
     }
 
+    @PutMapping("/{id}")
+    @Transactional
+    public ResponseEntity<PersonPutDTO> updateUser(@PathVariable UUID id, @RequestBody @Valid PersonPutDTO dto) {
+        return ResponseEntity.ok(personService.updateUser(id, dto));
+    }
+
+    @DeleteMapping("/{id}")
+    @Transactional
+    public ResponseEntity<Void> deleteUser(@PathVariable UUID id) {
+        personService.deleteUser(id);
+        return ResponseEntity.noContent().build();
+    }
 }

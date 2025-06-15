@@ -2,6 +2,7 @@ package com.animaladoption.platform.domain.address;
 
 import jakarta.persistence.*;
 
+import java.util.Objects;
 import java.util.UUID;
 
 @Entity
@@ -30,4 +31,63 @@ public class Address {
     @Column(name="cep")
     private String cep;
 
+    public String getState() {
+        return state;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public String getNeighbourhood() {
+        return neighbourhood;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public String getCep() {
+        return cep;
+    }
+
+    public void setCep(String cep) {
+        this.cep = cep;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public void setNeighbourhood(String neighbourhood) {
+        this.neighbourhood = neighbourhood;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Address address)) return false;
+        return number == address.number && Objects.equals(id, address.id) && Objects.equals(state, address.state) && Objects.equals(city, address.city) && Objects.equals(neighbourhood, address.neighbourhood) && Objects.equals(street, address.street) && Objects.equals(cep, address.cep);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, state, city, neighbourhood, street, number, cep);
+    }
 }
