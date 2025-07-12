@@ -1,5 +1,6 @@
 package com.animaladoption.platform.domain.address;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.Objects;
@@ -11,6 +12,7 @@ public class Address {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @JsonIgnore
     private UUID id;
 
     @Column(name="state")
@@ -38,6 +40,16 @@ public class Address {
         this.street = dto.street();
         this.number = dto.num();
         this.cep = dto.cep();
+    }
+
+    public Address(UUID id, String state, String city, String neighborhood, String street, Integer number, String cep) {
+        this.id = id;
+        this.state = state;
+        this.city = city;
+        this.neighborhood = neighborhood;
+        this.street = street;
+        this.number = number;
+        this.cep = cep;
     }
 
     public String getState() {

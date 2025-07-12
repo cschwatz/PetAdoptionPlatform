@@ -1,24 +1,23 @@
-package com.animaladoption.platform.domain.person;
+package com.animaladoption.platform.domain.ong;
 
 import com.animaladoption.platform.domain.address.Address;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.*;
 
 import java.util.Objects;
 import java.util.UUID;
 
 @Entity
-@Table(name="person")
-public class Person {
+@Table(name="ong")
+public class Ong {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @JsonIgnore
     private UUID id;
 
-    @Column(name="cpf")
-    private String cpf;
+    @Column(name="cnpj")
+    private String cpnj;
 
     @Column(name="name")
     private String name;
@@ -35,29 +34,28 @@ public class Person {
     @Column(name="phone")
     private String phone;
 
-    @OneToOne(cascade=CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name="address_id", referencedColumnName="id")
     private Address address;
 
-    public Person(PersonPostDto dto) {
-        this.cpf = dto.cpf();
+    public Ong(UUID id, String cpnj, String name, String login, String password, String email, Address address) {
+        this.id = id;
+        this.cpnj = cpnj;
+        this.name = name;
+        this.login = login;
+        this.password = password;
+        this.email = email;
+        this.address = address;
+    }
+
+    public Ong(OngPostDTO dto) {
+        this.cpnj = dto.cnpj();
         this.name = dto.name();
         this.login = dto.login();
         this.password = dto.password();
         this.email = dto.email();
         this.phone = dto.phone();
         this.address = dto.address();
-    }
-
-    public Person(UUID id, String cpf, String name, String login, String password, String email, String phone, Address address) {
-        this.id = id;
-        this.cpf = cpf;
-        this.name = name;
-        this.login = login;
-        this.password = password;
-        this.email = email;
-        this.phone = phone;
-        this.address = address;
     }
 
     public UUID getId() {
@@ -68,12 +66,12 @@ public class Person {
         this.id = id;
     }
 
-    public String getCpf() {
-        return cpf;
+    public String getCpnj() {
+        return cpnj;
     }
 
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
+    public void setCpnj(String cpnj) {
+        this.cpnj = cpnj;
     }
 
     public String getName() {
@@ -108,14 +106,6 @@ public class Person {
         this.email = email;
     }
 
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
     public Address getAddress() {
         return address;
     }
@@ -124,15 +114,23 @@ public class Person {
         this.address = address;
     }
 
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Person person)) return false;
-        return Objects.equals(id, person.id) && Objects.equals(cpf, person.cpf) && Objects.equals(name, person.name) && Objects.equals(login, person.login) && Objects.equals(password, person.password) && Objects.equals(email, person.email) && Objects.equals(phone, person.phone) && Objects.equals(address, person.address);
+        if (!(o instanceof Ong ong)) return false;
+        return Objects.equals(id, ong.id) && Objects.equals(cpnj, ong.cpnj) && Objects.equals(name, ong.name) && Objects.equals(login, ong.login) && Objects.equals(password, ong.password) && Objects.equals(email, ong.email) && Objects.equals(phone, ong.phone) && Objects.equals(address, ong.address);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, cpf, name, login, password, email, phone, address);
+        return Objects.hash(id, cpnj, name, login, password, email, phone, address);
     }
 }

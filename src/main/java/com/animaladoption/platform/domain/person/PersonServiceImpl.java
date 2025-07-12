@@ -1,7 +1,6 @@
 package com.animaladoption.platform.domain.person;
 
 import com.animaladoption.platform.exceptions.ObjectNotFound;
-import org.hibernate.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -60,7 +59,7 @@ public class PersonServiceImpl implements PersonService {
         }
         
         Optional<Person> userToUpdateOpt = repository.findById(id);
-        if (userToUpdateOpt.get() == null) {
+        if (userToUpdateOpt.isEmpty()) {
             throw new ObjectNotFound("Não foi possível localizar o usuário informado");
         }
         Person userToUpdate = userToUpdateOpt.get();
