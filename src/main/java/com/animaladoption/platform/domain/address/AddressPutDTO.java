@@ -1,24 +1,16 @@
 package com.animaladoption.platform.domain.address;
 
 import jakarta.validation.constraints.NotBlank;
-
-// TODO - CEP custom validation
-public record AddressGetDTO(
-        @NotBlank
+// TODO --  CEP validation
+public record AddressPutDTO (
         String state,
-        @NotBlank
         String city,
-        @NotBlank
         String neighborhood,
-        @NotBlank
         String street,
-        @NotBlank
-        int number,
-        @NotBlank
+        Integer num,
         String cep
 ) {
-
-    public AddressGetDTO(Address address) {
+    public AddressPutDTO (Address address) {
         this(address.getState(),
                 address.getCity(),
                 address.getNeighborhood(),
@@ -26,5 +18,4 @@ public record AddressGetDTO(
                 address.getNumber(),
                 address.getCep());
     }
-
 }

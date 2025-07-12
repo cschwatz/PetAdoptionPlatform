@@ -20,16 +20,25 @@ public class Address {
     private String city;
 
     @Column(name="neighbourhood")
-    private String neighbourhood;
+    private String neighborhood;
 
     @Column(name="street")
     private String street;
 
     @Column(name="num")
-    private int number;
+    private Integer number;
 
     @Column(name="cep")
     private String cep;
+
+    public Address(AddressPostDTO dto) {
+        this.state = dto.state();
+        this.city = dto.city();
+        this.neighborhood = dto.neighborhood();
+        this.street = dto.street();
+        this.number = dto.num();
+        this.cep = dto.cep();
+    }
 
     public String getState() {
         return state;
@@ -39,8 +48,8 @@ public class Address {
         return city;
     }
 
-    public String getNeighbourhood() {
-        return neighbourhood;
+    public String getNeighborhood() {
+        return neighborhood;
     }
 
     public String getStreet() {
@@ -67,8 +76,8 @@ public class Address {
         this.street = street;
     }
 
-    public void setNeighbourhood(String neighbourhood) {
-        this.neighbourhood = neighbourhood;
+    public void setNeighborhood(String neighbourhood) {
+        this.neighborhood = neighbourhood;
     }
 
     public void setCity(String city) {
@@ -83,11 +92,11 @@ public class Address {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Address address)) return false;
-        return number == address.number && Objects.equals(id, address.id) && Objects.equals(state, address.state) && Objects.equals(city, address.city) && Objects.equals(neighbourhood, address.neighbourhood) && Objects.equals(street, address.street) && Objects.equals(cep, address.cep);
+        return number == address.number && Objects.equals(id, address.id) && Objects.equals(state, address.state) && Objects.equals(city, address.city) && Objects.equals(neighborhood, address.neighborhood) && Objects.equals(street, address.street) && Objects.equals(cep, address.cep);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, state, city, neighbourhood, street, number, cep);
+        return Objects.hash(id, state, city, neighborhood, street, number, cep);
     }
 }
