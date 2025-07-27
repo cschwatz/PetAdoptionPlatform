@@ -19,7 +19,7 @@ public record AnimalPutDTO(
         String obs,
         Boolean castrated,
         Boolean adopted,
-        Byte[] photo,
+        byte[] photo,
         Person person
 ) {
     public AnimalPutDTO(Animal animal) {

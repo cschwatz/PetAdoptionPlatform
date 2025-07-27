@@ -19,7 +19,7 @@ public record AnimalPostDTO(
     Boolean castrated,
     @NotBlank
     Boolean adopted,
-    Byte[] photo,
+    byte[] photo,
     @NotBlank
     Ong ong,
     Person person

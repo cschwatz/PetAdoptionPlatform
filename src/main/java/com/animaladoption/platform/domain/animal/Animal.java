@@ -58,7 +58,7 @@ public class Animal {
     private Boolean adopted;
 
     @Column(name="photo")
-    private Byte[] photo;
+    private byte[] photo;
 
     @ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn(name="ong_id", referencedColumnName="id")
@@ -67,6 +67,8 @@ public class Animal {
     @ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn(name="person_id", referencedColumnName = "id")
     private Person person;
+
+    protected Animal() {}
 
     public Animal(AnimalPostDTO dto) {
         this.name = dto.name();
@@ -174,11 +176,11 @@ public class Animal {
         this.adopted = adopted;
     }
 
-    public Byte[] getPhoto() {
+    public byte[] getPhoto() {
         return photo;
     }
 
-    public void setPhoto(Byte[] photo) {
+    public void setPhoto(byte[] photo) {
         this.photo = photo;
     }
 

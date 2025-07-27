@@ -3,14 +3,18 @@ package com.animaladoption.platform.domain.person;
 import com.animaladoption.platform.domain.address.Address;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
 @Entity
 @Table(name="person")
-public class Person {
+public class Person implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -48,6 +52,8 @@ public class Person {
         this.phone = dto.phone();
         this.address = dto.address();
     }
+
+    protected Person() {}
 
     public Person(UUID id, String cpf, String name, String login, String password, String email, String phone, Address address) {
         this.id = id;
@@ -92,8 +98,42 @@ public class Person {
         this.login = login;
     }
 
+    @Override
+    @JsonIgnore
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+    }
+
+    @Override
+    @JsonIgnore
     public String getPassword() {
-        return password;
+        return this.password;
+    }
+
+    @Override
+    @JsonIgnore
+    public String getUsername() {
+        return this.login;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
     public void setPassword(String password) {

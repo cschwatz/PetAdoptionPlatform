@@ -22,8 +22,10 @@ public class Sponsorship {
     private Person person;
 
     @ManyToOne
-    @JoinColumn(name="animal_id", referencedColumnName="animal")
+    @JoinColumn(name="animal_id", referencedColumnName="id")
     private Animal animal;
+
+    protected Sponsorship() {}
 
     public Sponsorship(SponsorshipPostDTO dto) {
         this.person = dto.person();

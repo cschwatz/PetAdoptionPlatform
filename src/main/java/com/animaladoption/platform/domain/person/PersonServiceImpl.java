@@ -1,6 +1,10 @@
 package com.animaladoption.platform.domain.person;
 
 import com.animaladoption.platform.exceptions.ObjectNotFound;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -44,10 +48,14 @@ public class PersonServiceImpl implements PersonService {
             throw new IllegalArgumentException("Usuário informado é inválido.");
         }
 
-        // TODO - Check if login/email are already taken
-        // TODO - encryption of password after dealing with Spring security
+        if (isEmailAlreadyTaken(personDTO.email())) {
+            throw new IllegalArgumentException("E-mail informado já existe");
+        }
 
         Person personEntity = new Person(personDTO);
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String hashedPassword = passwordEncoder.encode(personEntity.getPassword());
+        personEntity.setPassword(hashedPassword);
         Person createdPerson = repository.save(personEntity);
         return new PersonPostDto(createdPerson);
     }
@@ -69,11 +77,17 @@ public class PersonServiceImpl implements PersonService {
         }
         
         if(!dto.password().isBlank()) {
-            userToUpdate.setPassword(dto.password());
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+            String hashedPassword = encoder.encode(dto.password());
+            userToUpdate.setPassword(hashedPassword);
         }
         
         if(!dto.email().isBlank()) {
-            userToUpdate.setEmail(dto.email());
+            if (!isEmailAlreadyTaken(dto.email())) {
+                userToUpdate.setEmail(dto.email());
+            } else {
+                throw new IllegalArgumentException("O E-mail informado já existe");
+            }
         }
         
         if (!dto.phone().isBlank()) {
@@ -100,5 +114,15 @@ public class PersonServiceImpl implements PersonService {
         }
 
         repository.delete(userToDelete.get());
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return repository.findByLogin(username);
+    }
+
+    private boolean isEmailAlreadyTaken(String email) {
+        Optional<Person> personOpt = repository.findPersonByEmail(email);
+        return personOpt.isPresent();
     }
 }

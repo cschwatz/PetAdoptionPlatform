@@ -1,6 +1,7 @@
 package com.animaladoption.platform.domain.animal;
 
 import com.animaladoption.platform.exceptions.ObjectNotFound;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+@Service
 public class AnimalServiceImpl implements AnimalService {
 
     private AnimalRepository repository;

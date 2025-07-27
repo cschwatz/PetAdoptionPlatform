@@ -4,12 +4,13 @@ import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import java.util.List;
 import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/person")
+@SecurityRequirement(name="bearer-key")
 public class PersonController {
 
     private PersonService personService;

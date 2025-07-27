@@ -3,13 +3,18 @@ package com.animaladoption.platform.domain.ong;
 import com.animaladoption.platform.domain.address.Address;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
 @Entity
 @Table(name="ong")
-public class Ong {
+public class Ong implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -37,6 +42,8 @@ public class Ong {
     @OneToOne
     @JoinColumn(name="address_id", referencedColumnName="id")
     private Address address;
+
+    protected Ong() {}
 
     public Ong(UUID id, String cpnj, String name, String login, String password, String email, Address address) {
         this.id = id;
@@ -90,8 +97,41 @@ public class Ong {
         this.login = login;
     }
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+    }
+
+    @Override
+    @JsonIgnore
     public String getPassword() {
-        return password;
+        return this.password;
+    }
+
+    @Override
+    @JsonIgnore
+    public String getUsername() {
+        return this.login;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
     public void setPassword(String password) {

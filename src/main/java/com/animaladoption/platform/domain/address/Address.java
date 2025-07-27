@@ -33,6 +33,8 @@ public class Address {
     @Column(name="cep")
     private String cep;
 
+    protected Address() {}
+
     public Address(AddressPostDTO dto) {
         this.state = dto.state();
         this.city = dto.city();

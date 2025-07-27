@@ -38,6 +38,8 @@ public class Event {
     @JoinColumn(name="ong_id", referencedColumnName="id")
     private Ong ong;
 
+    protected Event() {}
+
     public Event(EventPostDTO dto) {
         this.name = dto.name();
         this.eventType = dto.eventType();

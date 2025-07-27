@@ -14,7 +14,7 @@ public record AnimalGetDTO(
     String obs,
     Boolean castrated,
     Boolean adopted,
-    Byte[] photo,
+    byte[] photo,
     Ong ong,
     Person person
 ) {
