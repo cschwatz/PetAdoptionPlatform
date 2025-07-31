@@ -1,6 +1,6 @@
 package com.animaladoption.platform.domain.sponsorship;
 
-import com.animaladoption.platform.exceptions.ObjectNotFound;
+import com.animaladoption.platform.infra.exceptions.ObjectNotFound;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

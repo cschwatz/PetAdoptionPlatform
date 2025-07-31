@@ -2,10 +2,11 @@ package com.animaladoption.platform.domain.person;
 
 import com.animaladoption.platform.domain.address.Address;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
 
 public record PersonPutDTO(
-        String name,
+        String firstName,
+        String middleName,
+        String familyName,
         String password,
         @Email
         String email,
@@ -15,7 +16,9 @@ public record PersonPutDTO(
 ) {
 
     public PersonPutDTO(Person person) {
-        this(person.getName(),
+        this(person.getFirstName(),
+                person.getMiddleName(),
+                person.getFamilyName(),
                 person.getPassword(),
                 person.getEmail(),
                 person.getPhone(),

@@ -5,7 +5,10 @@ import jakarta.validation.constraints.NotBlank;
 
 public record PersonGetDto(
         @NotBlank
-        String name,
+        String firstName,
+        String middleName,
+        @NotBlank
+        String familyName,
         @NotBlank
         @Email
         String email,
@@ -14,7 +17,9 @@ public record PersonGetDto(
 ) {
 
     public PersonGetDto(Person person) {
-        this(person.getName(),
+        this(person.getFirstName(),
+            person.getMiddleName(),
+            person.getFamilyName(),
             person.getEmail(),
             person.getPhone());
     }

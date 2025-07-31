@@ -1,6 +1,6 @@
 package com.animaladoption.platform.domain.animal;
 
-import com.animaladoption.platform.exceptions.ObjectNotFound;
+import com.animaladoption.platform.infra.exceptions.ObjectNotFound;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -80,8 +80,8 @@ public class AnimalServiceImpl implements AnimalService {
             animalToUpdate.setGender(dto.gender());
         }
 
-        if (!dto.race().isBlank()) {
-            animalToUpdate.setRace(dto.race());
+        if (!dto.breed().isBlank()) {
+            animalToUpdate.setbreed(dto.breed());
         }
 
         if (!dto.color().isBlank()) {

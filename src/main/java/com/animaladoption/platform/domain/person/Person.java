@@ -24,8 +24,14 @@ public class Person implements UserDetails {
     @Column(name="cpf")
     private String cpf;
 
-    @Column(name="name")
-    private String name;
+    @Column(name="first_name")
+    private String firstName;
+
+    @Column(name="middle_name")
+    private String middleName;
+
+    @Column(name="family_name")
+    private String familyName;
 
     @Column(name="login")
     private String login;
@@ -45,7 +51,9 @@ public class Person implements UserDetails {
 
     public Person(PersonPostDto dto) {
         this.cpf = dto.cpf();
-        this.name = dto.name();
+        this.firstName = dto.firstName();
+        this.middleName = dto.middleName();
+        this.familyName = dto.familyName();
         this.login = dto.login();
         this.password = dto.password();
         this.email = dto.email();
@@ -55,10 +63,12 @@ public class Person implements UserDetails {
 
     protected Person() {}
 
-    public Person(UUID id, String cpf, String name, String login, String password, String email, String phone, Address address) {
+    public Person(UUID id, String cpf, String firstName, String middleName, String familyName, String login, String password, String email, String phone, Address address) {
         this.id = id;
         this.cpf = cpf;
-        this.name = name;
+        this.firstName = firstName;
+        this.middleName = middleName;
+        this.familyName = familyName;
         this.login = login;
         this.password = password;
         this.email = email;
@@ -80,14 +90,6 @@ public class Person implements UserDetails {
 
     public void setCpf(String cpf) {
         this.cpf = cpf;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getLogin() {
@@ -164,15 +166,39 @@ public class Person implements UserDetails {
         this.address = address;
     }
 
+    public String getFamilyName() {
+        return familyName;
+    }
+
+    public void setFamilyName(String familyName) {
+        this.familyName = familyName;
+    }
+
+    public String getMiddleName() {
+        return middleName;
+    }
+
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Person person)) return false;
-        return Objects.equals(id, person.id) && Objects.equals(cpf, person.cpf) && Objects.equals(name, person.name) && Objects.equals(login, person.login) && Objects.equals(password, person.password) && Objects.equals(email, person.email) && Objects.equals(phone, person.phone) && Objects.equals(address, person.address);
+        return Objects.equals(id, person.id) && Objects.equals(cpf, person.cpf) && Objects.equals(firstName, person.firstName) && Objects.equals(middleName, person.middleName) && Objects.equals(familyName, person.familyName) && Objects.equals(login, person.login) && Objects.equals(password, person.password) && Objects.equals(email, person.email) && Objects.equals(phone, person.phone) && Objects.equals(address, person.address);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, cpf, name, login, password, email, phone, address);
+        return Objects.hash(id, cpf, firstName, middleName, familyName, login, password, email, phone, address);
     }
 }

@@ -10,7 +10,10 @@ public record PersonPostDto(
         @NotBlank
         String cpf,
         @NotBlank
-        String name,
+        String firstName,
+        String middleName,
+        @NotBlank
+        String familyName,
         @NotBlank
         String login,
         @NotBlank
@@ -25,7 +28,9 @@ public record PersonPostDto(
 ) {
     public PersonPostDto(Person person) {
         this(person.getCpf(),
-                person.getName(),
+                person.getFirstName(),
+                person.getMiddleName(),
+                person.getFamilyName(),
                 person.getLogin(),
                 person.getPassword(),
                 person.getEmail(),

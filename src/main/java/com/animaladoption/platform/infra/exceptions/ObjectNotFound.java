@@ -1,4 +1,4 @@
-package com.animaladoption.platform.exceptions;
+package com.animaladoption.platform.infra.exceptions;
 
 public class ObjectNotFound extends RuntimeException {
 

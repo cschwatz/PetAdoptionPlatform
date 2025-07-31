@@ -1,4 +1,4 @@
-package com.animaladoption.platform.security;
+package com.animaladoption.platform.infra.security;
 
 import com.animaladoption.platform.domain.ong.OngRepository;
 import com.animaladoption.platform.domain.person.PersonRepository;

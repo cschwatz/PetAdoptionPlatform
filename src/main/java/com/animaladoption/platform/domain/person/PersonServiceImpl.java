@@ -1,9 +1,8 @@
 package com.animaladoption.platform.domain.person;
 
-import com.animaladoption.platform.exceptions.ObjectNotFound;
+import com.animaladoption.platform.infra.exceptions.ObjectNotFound;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -72,10 +71,18 @@ public class PersonServiceImpl implements PersonService {
         }
         Person userToUpdate = userToUpdateOpt.get();
         // TODO - transformar isto em um método auxiliar
-        if (!dto.name().isBlank()) {
-            userToUpdate.setName(dto.name());
+        if (!dto.firstName().isBlank()) {
+            userToUpdate.setFirstName(dto.firstName());
         }
-        
+
+        if (!dto.middleName().isBlank()) {
+            userToUpdate.setMiddleName(dto.middleName());
+        }
+
+        if (!dto.familyName().isBlank()) {
+            userToUpdate.setFamilyName(dto.familyName());
+        }
+
         if(!dto.password().isBlank()) {
             BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
             String hashedPassword = encoder.encode(dto.password());

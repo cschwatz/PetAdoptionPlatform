@@ -10,6 +10,12 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/animal")
+@CrossOrigin(
+        origins = "http://localhost:4200",
+        allowCredentials = "true",
+        allowedHeaders = "*",
+        methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.OPTIONS}
+)
 public class AnimalController {
 
     private AnimalService animalService;

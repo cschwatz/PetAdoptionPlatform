@@ -32,8 +32,8 @@ public class Animal {
     @Enumerated(EnumType.STRING)
     private AnimalGenderEnum gender;
 
-    @Column(name="race")
-    private String race;
+    @Column(name="breed")
+    private String breed;
 
     @Column(name="color")
     private String color;
@@ -75,7 +75,7 @@ public class Animal {
         this.animalType = dto.animalType();
         this.age = dto.age();
         this.gender = dto.gender();
-        this.race = dto.race();
+        this.breed = dto.breed();
         this.color = dto.color();
         this.size = dto.size();
         this.weight = dto.weight();
@@ -112,12 +112,12 @@ public class Animal {
         this.age = age;
     }
 
-    public String getRace() {
-        return race;
+    public String getbreed() {
+        return breed;
     }
 
-    public void setRace(String race) {
-        this.race = race;
+    public void setbreed(String breed) {
+        this.breed = breed;
     }
 
     public String getColor() {
@@ -212,11 +212,11 @@ public class Animal {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Animal animal)) return false;
-        return Objects.equals(id, animal.id) && Objects.equals(name, animal.name) && animalType == animal.animalType && Objects.equals(age, animal.age) && gender == animal.gender && Objects.equals(race, animal.race) && Objects.equals(color, animal.color) && Objects.equals(size, animal.size) && Objects.equals(weight, animal.weight) && fur == animal.fur && Objects.equals(obs, animal.obs) && Objects.equals(castrated, animal.castrated) && Objects.equals(adopted, animal.adopted) && Objects.deepEquals(photo, animal.photo) && Objects.equals(ong, animal.ong) && Objects.equals(person, animal.person);
+        return Objects.equals(id, animal.id) && Objects.equals(name, animal.name) && animalType == animal.animalType && Objects.equals(age, animal.age) && gender == animal.gender && Objects.equals(breed, animal.breed) && Objects.equals(color, animal.color) && Objects.equals(size, animal.size) && Objects.equals(weight, animal.weight) && fur == animal.fur && Objects.equals(obs, animal.obs) && Objects.equals(castrated, animal.castrated) && Objects.equals(adopted, animal.adopted) && Objects.deepEquals(photo, animal.photo) && Objects.equals(ong, animal.ong) && Objects.equals(person, animal.person);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, animalType, age, gender, race, color, size, weight, fur, obs, castrated, adopted, Arrays.hashCode(photo), ong, person);
+        return Objects.hash(id, name, animalType, age, gender, breed, color, size, weight, fur, obs, castrated, adopted, Arrays.hashCode(photo), ong, person);
     }
 }
