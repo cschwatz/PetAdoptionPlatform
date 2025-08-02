@@ -18,7 +18,6 @@ public class Ong implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @JsonIgnore
     private UUID id;
 
     @Column(name="cnpj")

@@ -15,7 +15,6 @@ public class Animal {
 
     @Id
     @GeneratedValue
-    @JsonIgnore
     private UUID id;
 
     @Column(name="name")
@@ -218,5 +217,9 @@ public class Animal {
     @Override
     public int hashCode() {
         return Objects.hash(id, name, animalType, age, gender, breed, color, size, weight, fur, obs, castrated, adopted, Arrays.hashCode(photo), ong, person);
+    }
+
+    public UUID getId() {
+        return id;
     }
 }
