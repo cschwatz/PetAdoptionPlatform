@@ -70,7 +70,7 @@ public class PersonServiceImpl implements PersonService {
             throw new ObjectNotFound("Não foi possível localizar o usuário informado");
         }
         Person userToUpdate = userToUpdateOpt.get();
-        // TODO - transformar isto em um método auxiliar
+
         if (!dto.firstName().isBlank()) {
             userToUpdate.setFirstName(dto.firstName());
         }
@@ -82,14 +82,8 @@ public class PersonServiceImpl implements PersonService {
         if (!dto.familyName().isBlank()) {
             userToUpdate.setFamilyName(dto.familyName());
         }
-
-        if(!dto.password().isBlank()) {
-            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-            String hashedPassword = encoder.encode(dto.password());
-            userToUpdate.setPassword(hashedPassword);
-        }
         
-        if(!dto.email().isBlank()) {
+        if(!dto.email().isBlank() && !userToUpdate.getEmail().equals(dto.email())) {
             if (!isEmailAlreadyTaken(dto.email())) {
                 userToUpdate.setEmail(dto.email());
             } else {
@@ -121,6 +115,15 @@ public class PersonServiceImpl implements PersonService {
         }
 
         repository.delete(userToDelete.get());
+    }
+
+    @Override
+    public Person getPersonByLogin(String login) {
+        if (login.isBlank()) {
+            throw new IllegalArgumentException("O nome de usuário informado é inválido");
+        }
+        Optional<Person> personOpt = repository.findPersonByLogin(login);
+        return personOpt.orElse(null);
     }
 
     @Override

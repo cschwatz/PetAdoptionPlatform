@@ -1,5 +1,8 @@
 package com.animaladoption.platform.domain.ong;
 
+import com.animaladoption.platform.domain.animal.Animal;
+import com.animaladoption.platform.domain.animal.AnimalGetDTO;
+
 import java.util.List;
 import java.util.UUID;
 
@@ -13,4 +16,8 @@ public interface OngService {
     public OngPutDTO updateOng(UUID id, OngPutDTO dto);
 
     public void deleteOng(UUID id);
+
+    Ong getOngByLogin(String login);
+
+    List<AnimalGetDTO> getMyAnimals();
 }

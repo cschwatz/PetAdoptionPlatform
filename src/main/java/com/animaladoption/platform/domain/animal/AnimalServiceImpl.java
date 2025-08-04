@@ -138,4 +138,13 @@ public class AnimalServiceImpl implements AnimalService {
 
         repository.delete(animalOpt.get());
     }
+
+    @Override
+    public List<AnimalGetDTO> getAllOngAnimals(UUID id) {
+        List<Animal> ongAnimals = repository.findByOngId(id);
+        return ongAnimals
+                .stream()
+                .map(AnimalGetDTO::new)
+                .collect(Collectors.toCollection(ArrayList::new));
+    }
 }

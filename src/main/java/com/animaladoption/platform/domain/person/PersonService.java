@@ -11,4 +11,5 @@ public interface PersonService extends UserDetailsService {
     PersonPostDto createUser(PersonPostDto person);
     PersonPutDTO updateUser(UUID id, PersonPutDTO dto);
     void deleteUser(UUID id);
+    Person getPersonByLogin(String login);
 }

@@ -26,11 +26,14 @@ public class TokenService {
         try {
             String login = person == null ? ong.getLogin() : person.getLogin();
             String id = person == null ? ong.getId().toString() : person.getId().toString();
+            String userType = person != null ? "PERSON" : "ONG"; // Add user type determination
+
             var alg = Algorithm.HMAC256(secret);
             return JWT.create()
                     .withIssuer("Pet Tracker")
                     .withSubject(login)
                     .withClaim("id", id) //guardar informações do usuario no token
+                    .withClaim("userType", userType) // Add the userType claim
                     .withExpiresAt(expiracyDate())
                     .sign(alg);
         } catch (JWTCreationException exception){
@@ -52,8 +55,22 @@ public class TokenService {
         }
     }
 
+    // Optional: Add method to extract userType from token
+    public String getUserType(String tokenJWT) {
+        try {
+            var alg = Algorithm.HMAC256(secret);
+            return JWT.require(alg)
+                    .withIssuer("Pet Tracker")
+                    .build()
+                    .verify(tokenJWT)
+                    .getClaim("userType")
+                    .asString();
+        } catch (JWTVerificationException exception){
+            throw new RuntimeException("Token JWT invalido ou expirado");
+        }
+    }
+    
     private Instant expiracyDate() {
         return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00"));
     }
-
 }

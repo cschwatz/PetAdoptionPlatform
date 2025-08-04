@@ -1,8 +1,15 @@
 package com.animaladoption.platform.domain.ong;
 
+import com.animaladoption.platform.domain.account.AccountService;
+import com.animaladoption.platform.domain.animal.AnimalGetDTO;
+import com.animaladoption.platform.domain.animal.AnimalService;
+import com.animaladoption.platform.domain.person.Person;
 import com.animaladoption.platform.infra.exceptions.ObjectNotFound;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -13,9 +20,12 @@ import java.util.stream.Collectors;
 public class OngServiceImpl implements OngService {
 
     private OngRepository repository;
+    private AnimalService animalService;
 
-    public OngServiceImpl(OngRepository repository) {
+    public OngServiceImpl(OngRepository repository,
+                          AnimalService animalService) {
         this.repository = repository;
+        this.animalService = animalService;
     }
 
     @Override
@@ -47,11 +57,22 @@ public class OngServiceImpl implements OngService {
             throw new IllegalArgumentException("DTO informado é inválido");
         }
 
-        // TODO - Check if login/email are already taken
-        // TODO - encryption of password after dealing with Spring security
+        if (isEmailAlreadyTaken(dto.email())) {
+            throw new IllegalArgumentException("E-mail informado já existe");
+        }
+
         Ong ongEntity = new Ong(dto);
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String hashedPassword = passwordEncoder.encode(ongEntity.getPassword());
+        ongEntity.setPassword(hashedPassword);
         Ong savedOng = repository.save(ongEntity);
+
         return new OngPostDTO(savedOng);
+    }
+
+    private boolean isEmailAlreadyTaken(String email) {
+        Optional<Ong> ongOpt = repository.findOngByEmail(email);
+        return ongOpt.isPresent();
     }
 
     @Override
@@ -71,11 +92,7 @@ public class OngServiceImpl implements OngService {
             ongToUpdate.setName(dto.name());
         }
 
-        if (!dto.password().isBlank()) {
-            ongToUpdate.setPassword(dto.password());
-        }
-
-        if (!dto.email().isBlank()) {
+        if (!dto.email().isBlank() && !ongToUpdate.getEmail().equals(dto.email())) {
             ongToUpdate.setEmail(dto.email());
         }
 
@@ -103,5 +120,32 @@ public class OngServiceImpl implements OngService {
         }
 
         repository.delete(ongOpt.get());
+    }
+
+    @Override
+    public Ong getOngByLogin(String login) {
+        if (login.isBlank()) {
+            throw new IllegalArgumentException("O nome de usuário informado é inválido");
+        }
+
+        Optional<Ong> ongOpt = repository.findOngByLogin(login);
+        return ongOpt.orElse(null);
+    }
+
+    @Override
+    public List<AnimalGetDTO> getMyAnimals() {
+        String username = this.getUsernameByToken();
+        Ong ong = this.getOngByLogin(username);
+
+        if (ong == null) {
+            throw new ObjectNotFound("A ONG informada não é válida");
+        }
+
+        return animalService.getAllOngAnimals(ong.getId());
+    }
+
+    private String getUsernameByToken() {
+        var authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication.getName();
     }
 }

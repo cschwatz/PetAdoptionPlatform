@@ -1,5 +1,6 @@
 package com.animaladoption.platform.domain.ong;
 
+import com.animaladoption.platform.domain.animal.AnimalGetDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -9,6 +10,12 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/ong")
+@CrossOrigin(
+        origins = "http://localhost:4200",
+        allowCredentials = "true",
+        allowedHeaders = "*",
+        methods = {RequestMethod.GET, RequestMethod.PUT, RequestMethod.POST, RequestMethod.OPTIONS}
+)
 public class OngController {
 
     private OngService ongService;
@@ -25,6 +32,11 @@ public class OngController {
     @GetMapping("/{id}")
     public ResponseEntity<OngGetDTO> getById(@PathVariable UUID id) {
         return ResponseEntity.ok(ongService.getById(id));
+    }
+
+    @GetMapping("/my-animals")
+    public ResponseEntity<List<AnimalGetDTO>> getMyAnimals() {
+        return ResponseEntity.ok(ongService.getMyAnimals());
     }
 
     @PostMapping

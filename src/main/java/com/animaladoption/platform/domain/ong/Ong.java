@@ -21,7 +21,7 @@ public class Ong implements UserDetails {
     private UUID id;
 
     @Column(name="cnpj")
-    private String cpnj;
+    private String cnpj;
 
     @Column(name="name")
     private String name;
@@ -38,15 +38,15 @@ public class Ong implements UserDetails {
     @Column(name="phone")
     private String phone;
 
-    @OneToOne
+    @OneToOne(cascade=CascadeType.ALL)
     @JoinColumn(name="address_id", referencedColumnName="id")
     private Address address;
 
     protected Ong() {}
 
-    public Ong(UUID id, String cpnj, String name, String login, String password, String email, Address address) {
+    public Ong(UUID id, String cnpj, String name, String login, String password, String email, Address address) {
         this.id = id;
-        this.cpnj = cpnj;
+        this.cnpj = cnpj;
         this.name = name;
         this.login = login;
         this.password = password;
@@ -55,7 +55,7 @@ public class Ong implements UserDetails {
     }
 
     public Ong(OngPostDTO dto) {
-        this.cpnj = dto.cnpj();
+        this.cnpj = dto.cnpj();
         this.name = dto.name();
         this.login = dto.login();
         this.password = dto.password();
@@ -72,12 +72,12 @@ public class Ong implements UserDetails {
         this.id = id;
     }
 
-    public String getCpnj() {
-        return cpnj;
+    public String getCnpj() {
+        return cnpj;
     }
 
-    public void setCpnj(String cpnj) {
-        this.cpnj = cpnj;
+    public void setCnpj(String cnpj) {
+        this.cnpj = cnpj;
     }
 
     public String getName() {
@@ -165,11 +165,11 @@ public class Ong implements UserDetails {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Ong ong)) return false;
-        return Objects.equals(id, ong.id) && Objects.equals(cpnj, ong.cpnj) && Objects.equals(name, ong.name) && Objects.equals(login, ong.login) && Objects.equals(password, ong.password) && Objects.equals(email, ong.email) && Objects.equals(phone, ong.phone) && Objects.equals(address, ong.address);
+        return Objects.equals(id, ong.id) && Objects.equals(cnpj, ong.cnpj) && Objects.equals(name, ong.name) && Objects.equals(login, ong.login) && Objects.equals(password, ong.password) && Objects.equals(email, ong.email) && Objects.equals(phone, ong.phone) && Objects.equals(address, ong.address);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, cpnj, name, login, password, email, phone, address);
+        return Objects.hash(id, cnpj, name, login, password, email, phone, address);
     }
 }

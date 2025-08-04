@@ -13,4 +13,6 @@ public interface AnimalService {
     public AnimalPutDTO updateAnimal(UUID id, AnimalPutDTO dto);
 
     public void deleteAnimal(UUID id);
+
+    public List<AnimalGetDTO> getAllOngAnimals(UUID id);
 }

@@ -5,6 +5,7 @@ import com.animaladoption.platform.domain.person.PersonRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -23,13 +24,16 @@ public class SecurityConfigurations {
     private SecurityFilter securityFilter;
     private PersonRepository personRepository;
     private OngRepository ongRepository;
+    private UnifiedUserDetailsService userDetailsService;
 
     public SecurityConfigurations(SecurityFilter securityFilter,
                                   PersonRepository personRepository,
-                                  OngRepository ongRepository) {
+                                  OngRepository ongRepository,
+                                  UnifiedUserDetailsService userDetailsService) {
         this.securityFilter = securityFilter;
         this.personRepository = personRepository;
         this.ongRepository = ongRepository;
+        this.userDetailsService = userDetailsService;
     }
 
     @Bean
@@ -48,9 +52,19 @@ public class SecurityConfigurations {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception{
-        return configuration.getAuthenticationManager();
+    public AuthenticationManager authenticationManager(
+            AuthenticationConfiguration authConfig) throws Exception {
+        return authConfig.getAuthenticationManager();
     }
+
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        authProvider.setUserDetailsService(userDetailsService);
+        authProvider.setPasswordEncoder(passwordEncoder());
+        return authProvider;
+    }
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {

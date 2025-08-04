@@ -23,7 +23,7 @@ public record OngPostDTO(
 ) {
     OngPostDTO(Ong ong) {
         this(
-                ong.getCpnj(),
+                ong.getCnpj(),
                 ong.getName(),
                 ong.getLogin(),
                 ong.getPassword(),

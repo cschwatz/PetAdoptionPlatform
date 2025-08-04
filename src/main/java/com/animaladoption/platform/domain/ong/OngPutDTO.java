@@ -5,7 +5,6 @@ import jakarta.validation.constraints.Email;
 
 public record OngPutDTO(
         String name,
-        String password,
         @Email
         String email,
         String phone,
@@ -14,7 +13,6 @@ public record OngPutDTO(
     public OngPutDTO(Ong ong) {
         this(
             ong.getName(),
-            ong.getPassword(),
             ong.getEmail(),
             ong.getPhone(),
             ong.getAddress()

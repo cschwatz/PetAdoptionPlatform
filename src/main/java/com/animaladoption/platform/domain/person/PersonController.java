@@ -10,7 +10,12 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/person")
-@SecurityRequirement(name="bearer-key")
+@CrossOrigin(
+        origins = "http://localhost:4200",
+        allowCredentials = "true",
+        allowedHeaders = "*",
+        methods = {RequestMethod.GET, RequestMethod.PUT, RequestMethod.POST, RequestMethod.OPTIONS}
+)
 public class PersonController {
 
     private PersonService personService;
