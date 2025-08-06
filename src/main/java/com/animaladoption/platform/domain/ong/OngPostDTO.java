@@ -18,6 +18,7 @@ public record OngPostDTO(
         String email,
         @NotBlank
         String phone,
+        String pix,
         @NotBlank
         Address address
 ) {
@@ -29,6 +30,7 @@ public record OngPostDTO(
                 ong.getPassword(),
                 ong.getEmail(),
                 ong.getPhone(),
+                ong.getPix(),
                 ong.getAddress()
         );
     }

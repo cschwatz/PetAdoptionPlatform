@@ -104,6 +104,10 @@ public class OngServiceImpl implements OngService {
             ongToUpdate.setAddress(dto.address());
         }
 
+        if (!dto.pix().isBlank()) {
+            ongToUpdate.setPix(dto.pix());
+        }
+
         Ong updatedOng = repository.save(ongToUpdate);
         return new OngPutDTO(updatedOng);
     }

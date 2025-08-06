@@ -2,7 +2,6 @@ package com.animaladoption.platform.domain.event;
 
 import com.animaladoption.platform.domain.address.Address;
 import com.animaladoption.platform.domain.ong.Ong;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -15,12 +14,12 @@ public class Event {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    @JsonIgnore
     private UUID id;
 
     @Column(name="name")
     private String name;
 
+    @Enumerated(EnumType.STRING)
     @Column(name="event_type")
     private EventTypeEnum eventType;
 
@@ -30,7 +29,10 @@ public class Event {
     @Column(name="end_date")
     private LocalDateTime endDate;
 
-    @OneToOne
+    @Column(name="obs")
+    private String obs;
+
+    @OneToOne(cascade=CascadeType.ALL)
     @JoinColumn(name="address_id", referencedColumnName="id")
     private Address address;
 
@@ -46,7 +48,6 @@ public class Event {
         this.startDate = dto.startDate();
         this.endDate = dto.endDate();
         this.address = dto.address();
-        this.ong = dto.ong();
     }
 
     public Ong getOng() {
@@ -97,15 +98,31 @@ public class Event {
         this.name = name;
     }
 
+    public String getObs() {
+        return obs;
+    }
+
+    public void setObs(String obs) {
+        this.obs = obs;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Event event)) return false;
-        return Objects.equals(id, event.id) && Objects.equals(name, event.name) && eventType == event.eventType && Objects.equals(startDate, event.startDate) && Objects.equals(endDate, event.endDate) && Objects.equals(address, event.address) && Objects.equals(ong, event.ong);
+        return Objects.equals(id, event.id) && Objects.equals(name, event.name) && eventType == event.eventType && Objects.equals(startDate, event.startDate) && Objects.equals(endDate, event.endDate) && Objects.equals(obs, event.obs) && Objects.equals(address, event.address) && Objects.equals(ong, event.ong);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, eventType, startDate, endDate, address, ong);
+        return Objects.hash(id, name, eventType, startDate, endDate, obs, address, ong);
     }
 }

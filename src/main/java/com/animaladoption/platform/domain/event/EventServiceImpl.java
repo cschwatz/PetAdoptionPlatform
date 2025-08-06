@@ -1,5 +1,6 @@
 package com.animaladoption.platform.domain.event;
 
+import com.animaladoption.platform.domain.ong.Ong;
 import com.animaladoption.platform.infra.exceptions.ObjectNotFound;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,10 @@ import java.util.stream.Collectors;
 public class EventServiceImpl implements EventService {
 
     private EventRepository repository;
+
+    public EventServiceImpl(EventRepository eventRepository) {
+        this.repository = eventRepository;
+    }
 
     @Override
     public List<EventGetDTO> getAllEvents() {
@@ -38,12 +43,17 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public EventPostDTO createNewEvent(EventPostDTO dto) {
+    public EventPostDTO createNewEvent(EventPostDTO dto, Ong ong) {
         if (dto == null) {
             throw new IllegalArgumentException("O Evento informado é inválido");
         }
 
+        if (ong == null) {
+            throw new IllegalArgumentException("A ONG informada é inválida");
+        }
+
         Event eventEntity = new Event(dto);
+        eventEntity.setOng(ong);
         Event savedEvent = repository.save(eventEntity);
         return new EventPostDTO(savedEvent);
     }
@@ -74,6 +84,10 @@ public class EventServiceImpl implements EventService {
 
         if (dto.endDate() != null) {
             eventToUpdate.setEndDate(dto.endDate());
+        }
+
+        if (!dto.obs().isBlank()) {
+            eventToUpdate.setObs(dto.obs());
         }
 
         if (dto.address() != null) {

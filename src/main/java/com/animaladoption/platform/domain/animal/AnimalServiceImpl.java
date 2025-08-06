@@ -1,8 +1,9 @@
 package com.animaladoption.platform.domain.animal;
 
+import com.animaladoption.platform.domain.account.AccountService;
+import com.animaladoption.platform.domain.ong.Ong;
 import com.animaladoption.platform.infra.exceptions.ObjectNotFound;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -42,12 +43,12 @@ public class AnimalServiceImpl implements AnimalService {
     }
 
     @Override
-    public AnimalPostDTO createNewAnimal(AnimalPostDTO dto) {
+    public AnimalPostDTO createNewAnimal(AnimalPostDTO dto, Ong ong) {
         if (dto == null) {
             throw new IllegalArgumentException("O Animal informado é inválido");
         }
-
         Animal animalEntity = new Animal(dto);
+        animalEntity.setOng(ong);
         Animal savedAnimal = repository.save(animalEntity);
         return new AnimalPostDTO(savedAnimal);
     }

@@ -38,6 +38,9 @@ public class Ong implements UserDetails {
     @Column(name="phone")
     private String phone;
 
+    @Column(name="pix")
+    private String pix;
+
     @OneToOne(cascade=CascadeType.ALL)
     @JoinColumn(name="address_id", referencedColumnName="id")
     private Address address;
@@ -161,15 +164,23 @@ public class Ong implements UserDetails {
         this.phone = phone;
     }
 
+    public String getPix() {
+        return pix;
+    }
+
+    public void setPix(String pix) {
+        this.pix = pix;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Ong ong)) return false;
-        return Objects.equals(id, ong.id) && Objects.equals(cnpj, ong.cnpj) && Objects.equals(name, ong.name) && Objects.equals(login, ong.login) && Objects.equals(password, ong.password) && Objects.equals(email, ong.email) && Objects.equals(phone, ong.phone) && Objects.equals(address, ong.address);
+        return Objects.equals(id, ong.id) && Objects.equals(cnpj, ong.cnpj) && Objects.equals(name, ong.name) && Objects.equals(login, ong.login) && Objects.equals(password, ong.password) && Objects.equals(email, ong.email) && Objects.equals(phone, ong.phone) && Objects.equals(pix, ong.pix) && Objects.equals(address, ong.address);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, cnpj, name, login, password, email, phone, address);
+        return Objects.hash(id, cnpj, name, login, password, email, phone, pix, address);
     }
 }

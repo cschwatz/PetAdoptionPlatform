@@ -1,5 +1,7 @@
 package com.animaladoption.platform.domain.event;
 
+import com.animaladoption.platform.domain.account.AccountService;
+import com.animaladoption.platform.domain.ong.Ong;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,12 +12,20 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/event")
+@CrossOrigin(
+        origins = "http://localhost:4200",
+        allowCredentials = "true",
+        allowedHeaders = "*",
+        methods = {RequestMethod.GET, RequestMethod.PUT, RequestMethod.POST, RequestMethod.OPTIONS}
+)
 public class EventController {
 
     private EventService eventService;
+    private AccountService accountService;
 
-    public EventController(EventService eventService) {
+    public EventController(EventService eventService, AccountService accountService) {
         this.eventService = eventService;
+        this.accountService = accountService;
     }
 
     @GetMapping
@@ -31,7 +41,8 @@ public class EventController {
     @PostMapping
     @Transactional
     public ResponseEntity<EventPostDTO> createNewEvent(@RequestBody @Valid EventPostDTO dto) {
-        return ResponseEntity.ok(eventService.createNewEvent(dto));
+        Ong authenticatedOng = accountService.getAuthenticatedOng();
+        return ResponseEntity.ok(eventService.createNewEvent(dto, authenticatedOng));
     }
 
     @PutMapping("/{id}")

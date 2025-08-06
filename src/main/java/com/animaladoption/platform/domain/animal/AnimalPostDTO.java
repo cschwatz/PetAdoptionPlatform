@@ -3,10 +3,11 @@ package com.animaladoption.platform.domain.animal;
 import com.animaladoption.platform.domain.ong.Ong;
 import com.animaladoption.platform.domain.person.Person;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public record AnimalPostDTO(
     String name,
-    @NotBlank
+    @NotNull
     AnimalTypeEnum animalType,
     Integer age,
     AnimalGenderEnum gender,
@@ -17,12 +18,9 @@ public record AnimalPostDTO(
     FurSizeEnum fur,
     String obs,
     Boolean castrated,
-    @NotBlank
+    @NotNull
     Boolean adopted,
-    byte[] photo,
-    @NotBlank
-    Ong ong,
-    Person person
+    byte[] photo
 ) {
     public AnimalPostDTO(Animal animal) {
         this(
@@ -38,9 +36,7 @@ public record AnimalPostDTO(
                 animal.getObs(),
                 animal.getCastrated(),
                 false,
-                animal.getPhoto(),
-                animal.getOng(),
-                animal.getPerson()
+                animal.getPhoto()
         );
     }
 }

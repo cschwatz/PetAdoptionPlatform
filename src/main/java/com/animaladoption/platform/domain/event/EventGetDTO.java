@@ -6,8 +6,11 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotBlank;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 public record EventGetDTO(
+        @NotBlank
+        UUID id,
         @NotBlank
         String name,
         @NotBlank
@@ -18,6 +21,7 @@ public record EventGetDTO(
         @NotBlank
         @JsonFormat(pattern="dd/MM/yyyy HH:mm")
         LocalDateTime endDate,
+        String obs,
         @NotBlank
         Address address,
         @NotBlank
@@ -25,10 +29,12 @@ public record EventGetDTO(
 ) {
     public EventGetDTO(Event event) {
         this(
+                event.getId(),
                 event.getName(),
                 event.getEventType(),
                 event.getStartDate(),
                 event.getEndDate(),
+                event.getObs(),
                 event.getAddress(),
                 event.getOng()
         );

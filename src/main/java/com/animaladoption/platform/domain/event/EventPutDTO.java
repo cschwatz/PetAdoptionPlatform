@@ -18,6 +18,7 @@ public record EventPutDTO(
         @NotBlank
         @JsonFormat(pattern="dd/MM/yyyy HH:mm")
         LocalDateTime endDate,
+        String obs,
         @NotBlank
         Address address,
         @NotBlank
@@ -30,6 +31,7 @@ public record EventPutDTO(
                 event.getEventType(),
                 event.getStartDate(),
                 event.getEndDate(),
+                event.getObs(),
                 event.getAddress(),
                 event.getOng()
         );

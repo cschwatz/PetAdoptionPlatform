@@ -83,8 +83,6 @@ public class Animal {
         this.castrated = dto.castrated();
         this.adopted = dto.adopted();
         this.photo = dto.photo();
-        this.ong = dto.ong();
-        this.person = dto.person();
     }
 
     public String getName() {

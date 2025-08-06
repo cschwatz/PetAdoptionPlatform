@@ -1,5 +1,7 @@
 package com.animaladoption.platform.domain.animal;
 
+import com.animaladoption.platform.domain.account.AccountService;
+import com.animaladoption.platform.domain.ong.Ong;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,14 +16,16 @@ import java.util.UUID;
         origins = "http://localhost:4200",
         allowCredentials = "true",
         allowedHeaders = "*",
-        methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.OPTIONS}
+        methods = {RequestMethod.GET, RequestMethod.PUT, RequestMethod.POST, RequestMethod.OPTIONS}
 )
 public class AnimalController {
 
     private AnimalService animalService;
+    private AccountService accountService;
 
-    public AnimalController(AnimalService animalService) {
+    public AnimalController(AnimalService animalService, AccountService accountService) {
         this.animalService = animalService;
+        this.accountService = accountService;
     }
 
     @GetMapping
@@ -37,7 +41,8 @@ public class AnimalController {
     @PostMapping
     @Transactional
     public ResponseEntity<AnimalPostDTO> createNewAnimal(@RequestBody @Valid AnimalPostDTO dto) {
-        return ResponseEntity.ok(animalService.createNewAnimal(dto));
+        Ong authenticatedOng = accountService.getAuthenticatedOng();
+        return ResponseEntity.ok(animalService.createNewAnimal(dto, authenticatedOng));
     }
 
     @PutMapping("/{id}")

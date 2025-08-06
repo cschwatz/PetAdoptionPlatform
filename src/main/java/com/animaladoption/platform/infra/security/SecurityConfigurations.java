@@ -4,6 +4,7 @@ import com.animaladoption.platform.domain.ong.OngRepository;
 import com.animaladoption.platform.domain.person.PersonRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -38,17 +39,17 @@ public class SecurityConfigurations {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return
-                http.csrf(AbstractHttpConfigurer::disable)
-                        .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                        .authorizeHttpRequests(req -> {
-                            req.requestMatchers("/api/login/**").permitAll();
-                            req.requestMatchers("/api/**").permitAll();
-                            req.requestMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll();
-                            req.anyRequest().authenticated();
-                        })
-                        .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
-                        .build();
+        return http.csrf(AbstractHttpConfigurer::disable)
+                .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(req -> {
+                    req.requestMatchers("/api/login/**").permitAll();
+                    req.requestMatchers("/api/register/**").permitAll();
+                    req.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll(); // CORS
+                    req.requestMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll();
+                    req.anyRequest().authenticated(); // ← Protect everything else
+                })
+                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
+                .build();
     }
 
     @Bean

@@ -8,6 +8,7 @@ public record OngPutDTO(
         @Email
         String email,
         String phone,
+        String pix,
         Address address
 ) {
     public OngPutDTO(Ong ong) {
@@ -15,6 +16,7 @@ public record OngPutDTO(
             ong.getName(),
             ong.getEmail(),
             ong.getPhone(),
+            ong.getPix(),
             ong.getAddress()
         );
     }
