@@ -9,6 +9,9 @@ public record OngPutDTO(
         String email,
         String phone,
         String pix,
+        String instagram,
+        String facebook,
+        String tiktok,
         Address address
 ) {
     public OngPutDTO(Ong ong) {
@@ -17,6 +20,9 @@ public record OngPutDTO(
             ong.getEmail(),
             ong.getPhone(),
             ong.getPix(),
+            ong.getInstagram(),
+            ong.getFacebook(),
+            ong.getTiktok(),
             ong.getAddress()
         );
     }

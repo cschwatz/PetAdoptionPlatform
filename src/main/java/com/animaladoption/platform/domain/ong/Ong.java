@@ -41,6 +41,15 @@ public class Ong implements UserDetails {
     @Column(name="pix")
     private String pix;
 
+    @Column(name="instagram")
+    private String instagram;
+
+    @Column(name="facebook")
+    private String facebook;
+
+    @Column(name="tiktok")
+    private String tiktok;
+
     @OneToOne(cascade=CascadeType.ALL)
     @JoinColumn(name="address_id", referencedColumnName="id")
     private Address address;
@@ -172,15 +181,39 @@ public class Ong implements UserDetails {
         this.pix = pix;
     }
 
+    public String getInstagram() {
+        return instagram;
+    }
+
+    public void setInstagram(String instagram) {
+        this.instagram = instagram;
+    }
+
+    public String getFacebook() {
+        return facebook;
+    }
+
+    public void setFacebook(String facebook) {
+        this.facebook = facebook;
+    }
+
+    public String getTiktok() {
+        return tiktok;
+    }
+
+    public void setTiktok(String tiktok) {
+        this.tiktok = tiktok;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Ong ong)) return false;
-        return Objects.equals(id, ong.id) && Objects.equals(cnpj, ong.cnpj) && Objects.equals(name, ong.name) && Objects.equals(login, ong.login) && Objects.equals(password, ong.password) && Objects.equals(email, ong.email) && Objects.equals(phone, ong.phone) && Objects.equals(pix, ong.pix) && Objects.equals(address, ong.address);
+        return Objects.equals(id, ong.id) && Objects.equals(cnpj, ong.cnpj) && Objects.equals(name, ong.name) && Objects.equals(login, ong.login) && Objects.equals(password, ong.password) && Objects.equals(email, ong.email) && Objects.equals(phone, ong.phone) && Objects.equals(pix, ong.pix) && Objects.equals(instagram, ong.instagram) && Objects.equals(facebook, ong.facebook) && Objects.equals(tiktok, ong.tiktok) && Objects.equals(address, ong.address);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, cnpj, name, login, password, email, phone, pix, address);
+        return Objects.hash(id, cnpj, name, login, password, email, phone, pix, instagram, facebook, tiktok, address);
     }
 }

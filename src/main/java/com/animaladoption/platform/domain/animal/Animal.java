@@ -59,11 +59,11 @@ public class Animal {
     @Column(name="photo")
     private byte[] photo;
 
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name="ong_id", referencedColumnName="id")
     private Ong ong;
 
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name="person_id", referencedColumnName = "id")
     private Person person;
 

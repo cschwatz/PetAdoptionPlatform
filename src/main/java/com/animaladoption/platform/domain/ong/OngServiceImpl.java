@@ -3,6 +3,8 @@ package com.animaladoption.platform.domain.ong;
 import com.animaladoption.platform.domain.account.AccountService;
 import com.animaladoption.platform.domain.animal.AnimalGetDTO;
 import com.animaladoption.platform.domain.animal.AnimalService;
+import com.animaladoption.platform.domain.event.EventGetDTO;
+import com.animaladoption.platform.domain.event.EventService;
 import com.animaladoption.platform.domain.person.Person;
 import com.animaladoption.platform.infra.exceptions.ObjectNotFound;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,11 +23,14 @@ public class OngServiceImpl implements OngService {
 
     private OngRepository repository;
     private AnimalService animalService;
+    private EventService eventService;
 
     public OngServiceImpl(OngRepository repository,
-                          AnimalService animalService) {
+                          AnimalService animalService,
+                          EventService eventService) {
         this.repository = repository;
         this.animalService = animalService;
+        this.eventService = eventService;
     }
 
     @Override
@@ -108,6 +113,18 @@ public class OngServiceImpl implements OngService {
             ongToUpdate.setPix(dto.pix());
         }
 
+        if (!dto.instagram().isBlank()) {
+            ongToUpdate.setInstagram(dto.instagram());
+        }
+
+        if (!dto.facebook().isBlank()) {
+            ongToUpdate.setFacebook(dto.facebook());
+        }
+
+        if (!dto.tiktok().isBlank()) {
+            ongToUpdate.setTiktok(dto.tiktok());
+        }
+
         Ong updatedOng = repository.save(ongToUpdate);
         return new OngPutDTO(updatedOng);
     }
@@ -146,6 +163,18 @@ public class OngServiceImpl implements OngService {
         }
 
         return animalService.getAllOngAnimals(ong.getId());
+    }
+
+    @Override
+    public List<EventGetDTO> getMyEvents() {
+        String username = this.getUsernameByToken();
+        Ong ong = this.getOngByLogin(username);
+
+        if (ong == null) {
+            throw new ObjectNotFound("A ONG informada não é válida");
+        }
+
+        return eventService.getOngEvents(ong.getId());
     }
 
     private String getUsernameByToken() {

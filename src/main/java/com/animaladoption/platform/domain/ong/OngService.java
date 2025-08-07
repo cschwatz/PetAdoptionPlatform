@@ -1,7 +1,7 @@
 package com.animaladoption.platform.domain.ong;
 
-import com.animaladoption.platform.domain.animal.Animal;
 import com.animaladoption.platform.domain.animal.AnimalGetDTO;
+import com.animaladoption.platform.domain.event.EventGetDTO;
 
 import java.util.List;
 import java.util.UUID;
@@ -20,4 +20,6 @@ public interface OngService {
     Ong getOngByLogin(String login);
 
     List<AnimalGetDTO> getMyAnimals();
+
+    List<EventGetDTO> getMyEvents();
 }

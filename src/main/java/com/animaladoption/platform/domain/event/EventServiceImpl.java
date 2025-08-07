@@ -1,5 +1,7 @@
 package com.animaladoption.platform.domain.event;
 
+import com.animaladoption.platform.domain.animal.Animal;
+import com.animaladoption.platform.domain.animal.AnimalGetDTO;
 import com.animaladoption.platform.domain.ong.Ong;
 import com.animaladoption.platform.infra.exceptions.ObjectNotFound;
 import org.springframework.stereotype.Service;
@@ -94,10 +96,6 @@ public class EventServiceImpl implements EventService {
             eventToUpdate.setAddress(dto.address());
         }
 
-        if (dto.ong() != null) {
-            eventToUpdate.setOng(dto.ong());
-        }
-
         Event savedEvent = repository.save(eventToUpdate);
         return new EventPutDTO(savedEvent);
     }
@@ -114,5 +112,14 @@ public class EventServiceImpl implements EventService {
         }
 
         repository.delete(eventOpt.get());
+    }
+
+    @Override
+    public List<EventGetDTO> getOngEvents(UUID id) {
+        List<Event> ongEvents = repository.findByOngId(id);
+        return ongEvents
+                .stream()
+                .map(EventGetDTO::new)
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 }

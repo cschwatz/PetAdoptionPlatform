@@ -1,6 +1,7 @@
 package com.animaladoption.platform.domain.ong;
 
 import com.animaladoption.platform.domain.animal.AnimalGetDTO;
+import com.animaladoption.platform.domain.event.EventGetDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -37,6 +38,11 @@ public class OngController {
     @GetMapping("/my-animals")
     public ResponseEntity<List<AnimalGetDTO>> getMyAnimals() {
         return ResponseEntity.ok(ongService.getMyAnimals());
+    }
+
+    @GetMapping("/my-events")
+    public ResponseEntity<List<EventGetDTO>> getMyEvents() {
+        return ResponseEntity.ok(ongService.getMyEvents());
     }
 
     @PostMapping

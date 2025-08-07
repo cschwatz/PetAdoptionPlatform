@@ -15,4 +15,6 @@ public interface EventService {
     EventPutDTO updateEvent(UUID id, EventPutDTO dto);
 
     void deleteEvent(UUID id);
+
+    List<EventGetDTO> getOngEvents(UUID id);
 }

@@ -4,25 +4,19 @@ import com.animaladoption.platform.domain.address.Address;
 import com.animaladoption.platform.domain.ong.Ong;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
 
 public record EventPutDTO(
-        @NotBlank
         String name,
-        @NotBlank
         EventTypeEnum eventType,
-        @NotBlank
         @JsonFormat(pattern="dd/MM/yyyy HH:mm")
         LocalDateTime startDate,
-        @NotBlank
         @JsonFormat(pattern="dd/MM/yyyy HH:mm")
         LocalDateTime endDate,
         String obs,
-        @NotBlank
-        Address address,
-        @NotBlank
-        Ong ong
+        Address address
 ) {
 
     public EventPutDTO(Event event) {
@@ -32,8 +26,7 @@ public record EventPutDTO(
                 event.getStartDate(),
                 event.getEndDate(),
                 event.getObs(),
-                event.getAddress(),
-                event.getOng()
+                event.getAddress()
         );
     }
 

@@ -19,6 +19,9 @@ public record OngPostDTO(
         @NotBlank
         String phone,
         String pix,
+        String instagram,
+        String facebook,
+        String tiktok,
         @NotBlank
         Address address
 ) {
@@ -31,6 +34,9 @@ public record OngPostDTO(
                 ong.getEmail(),
                 ong.getPhone(),
                 ong.getPix(),
+                ong.getInstagram(),
+                ong.getFacebook(),
+                ong.getTiktok(),
                 ong.getAddress()
         );
     }
