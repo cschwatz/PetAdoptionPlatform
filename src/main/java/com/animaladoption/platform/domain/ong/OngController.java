@@ -12,7 +12,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/ong")
 @CrossOrigin(
-        origins = "${app.frontend.url}",
+        origins = "http://localhost:4200",
         allowCredentials = "true",
         allowedHeaders = "*",
         methods = {RequestMethod.GET, RequestMethod.PUT, RequestMethod.POST, RequestMethod.OPTIONS}

@@ -9,7 +9,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/account")
 @CrossOrigin(
-        origins = "${app.frontend.url}",
+        origins = "http://localhost:4200",
         allowCredentials = "true",
         allowedHeaders = "*",
         methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.OPTIONS}
