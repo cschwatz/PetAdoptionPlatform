@@ -47,6 +47,7 @@ public class SecurityConfigurations {
         return http.csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(req -> {
+                    req.requestMatchers("/**").permitAll();
                     req.requestMatchers("/api/login/**").permitAll();
                     req.requestMatchers("/api/register/**").permitAll();
                     req.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll(); // CORS
