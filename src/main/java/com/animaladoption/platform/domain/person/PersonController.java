@@ -10,6 +10,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/person")
+@CrossOrigin(origins = "*", methods = {RequestMethod.POST, RequestMethod.GET, RequestMethod.PUT, RequestMethod.OPTIONS, RequestMethod.DELETE})
 public class PersonController {
 
     private PersonService personService;

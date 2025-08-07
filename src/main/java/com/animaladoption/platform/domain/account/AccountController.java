@@ -8,6 +8,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/account")
+@CrossOrigin(origins = "*", methods = {RequestMethod.POST, RequestMethod.GET, RequestMethod.PUT, RequestMethod.OPTIONS, RequestMethod.DELETE})
 public class AccountController {
 
     private AccountService accountService;
