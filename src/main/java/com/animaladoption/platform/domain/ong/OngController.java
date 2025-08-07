@@ -11,12 +11,6 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/ong")
-@CrossOrigin(
-        origins = {"http://localhost:4200", "https://petadoptionplatformfrontend.onrender.com"},
-        allowCredentials = "true",
-        allowedHeaders = "*",
-        methods = {RequestMethod.GET, RequestMethod.PUT, RequestMethod.POST, RequestMethod.OPTIONS}
-)
 public class OngController {
 
     private OngService ongService;

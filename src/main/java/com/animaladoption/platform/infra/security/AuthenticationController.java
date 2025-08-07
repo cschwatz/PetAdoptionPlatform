@@ -12,12 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/login")
-@CrossOrigin(
-        origins = {"http://localhost:4200", "https://petadoptionplatformfrontend.onrender.com"},
-        allowCredentials = "true",
-        allowedHeaders = "*",
-        methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.OPTIONS}
-)
 public class AuthenticationController {
 
     private final TokenService tokenService;

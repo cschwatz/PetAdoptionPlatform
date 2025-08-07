@@ -8,12 +8,6 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/account")
-@CrossOrigin(
-        origins = {"http://localhost:4200", "https://petadoptionplatformfrontend.onrender.com"},
-        allowCredentials = "true",
-        allowedHeaders = "*",
-        methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.OPTIONS}
-)
 public class AccountController {
 
     private AccountService accountService;

@@ -12,12 +12,6 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/event")
-@CrossOrigin(
-        origins = {"http://localhost:4200", "https://petadoptionplatformfrontend.onrender.com"},
-        allowCredentials = "true",
-        allowedHeaders = "*",
-        methods = {RequestMethod.GET, RequestMethod.PUT, RequestMethod.POST, RequestMethod.DELETE, RequestMethod.OPTIONS}
-)
 public class EventController {
 
     private EventService eventService;
