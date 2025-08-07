@@ -1,11 +1,17 @@
-FROM maven:3.9.5-openjdk-21 AS build
-WORKDIR /app
-COPY pom.xml .
-COPY src ./src
+FROM ubuntu:latest AS build
+
+RUN apt-get update
+RUN apt-get install openjdk-21-jdk -y
+COPY . .
+
+RUN apt-get install maven -y
 RUN mvn clean install -DskipTests
 
 FROM openjdk:21-jdk-slim
-WORKDIR /app
-COPY --from=build /app/target/platform-0.0.1-SNAPSHOT.jar app.jar
+
+
 EXPOSE 8080
-ENTRYPOINT ["java", "-Dserver.port=${PORT:-8080}", "-jar", "app.jar"]
+
+COPY --from=build /target/platform-0.0.1-SNAPSHOT.jar app.jar
+
+ENTRYPOINT [ "java", "-jar", "app.jar" ]
